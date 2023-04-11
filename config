@@ -1,0 +1,20 @@
+TAGNAME=ubuntu:autogpt
+NAME=autogpt
+HOSTNAME=$NAME
+
+HOSTUID=$(id -u)
+HOSTGID=$(id -g)
+GUESTUID=0
+GUESTGID=0
+GUESTUSERHOME=/root
+
+X11ARGS="-e DISPLAY -v ${HOME}/.Xauthority:${GUESTUSERHOME}/.Xauthority:Z -v /tmp/.X11-unix:/tmp/.X11-unix:rw --net=host --ipc=host"
+SHAREDARGS="-v ${HOME}/:/shared:rw"
+#RUNARGS="-it --rm"
+RUNARGS="-it"
+
+
+EXTRAARGS="$EXTRAARGS --systemd=true --privileged --security-opt label=disable -v /run/user/${HOSTUID}/:/run/user/${GUESTUID}/ -e XDG_RUNTIME_DIR=/run/user/${GUESTUID} -e PULSE_SERVER=/run/user/${GUESTUID}/pulse/native --gpus all --detach"
+
+EXTRAARGS="$EXTRAARGS -v /data/media:/data/media:rw"
+
