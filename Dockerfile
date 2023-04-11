@@ -33,6 +33,11 @@ RUN \
   cd /root && git clone https://github.com/Torantulino/Auto-GPT.git && \
   cd /root/Auto-GPT && pip install -r requirements.txt
 
+COPY debug-fix-2023-04-11-1.patch /root/debug-fix-2023-04-11-1.patch
+
+RUN \
+  cd /root/Auto-GPT && git apply /root/debug-fix-2023-04-11-1.patch
+
 RUN \
   apt-get install -y screen
 
